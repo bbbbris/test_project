@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=psdb
+      - POSTGRES_USER=formUser
+      - POSTGRES_PASSWORD=Password123
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - APP_DB_NAME=psdb
+      - APP_DB_USER=formUser
+      - APP_DB_PASSWORD=Password123
